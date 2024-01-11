@@ -12,9 +12,9 @@ import {
 import { Link } from "react-router-dom";
 
 import { useTheme } from "@mui/styles";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetGenresQuery } from "../../services/TMDB";
 import genreIcons from "../../assets/genres";
-import { useDispatch, useSelector } from "react-redux";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 import useStyles from "./styles";
@@ -31,11 +31,13 @@ const blueLogo =
   "https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png";
 
 const Sidebar = ({ setMobileOpen }) => {
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-  console.log(data);
 
   return (
     <>
