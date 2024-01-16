@@ -31,8 +31,6 @@ const Navbar = () => {
   const isMobie = useMediaQuery("(max-width:600px)");
   const theme = useTheme();
 
-  console.log(user);
-
   const token = localStorage.getItem("request_token");
   const sessionIdFromLocalStorage = localStorage.getItem("session_id");
   const dispatch = useDispatch();
@@ -41,13 +39,11 @@ const Navbar = () => {
     const logInUser = async () => {
       if (token) {
         if (sessionIdFromLocalStorage) {
-          console.log(1);
           const { data: userData } = await moviesApi.get(
             `/account?session_id=${sessionIdFromLocalStorage}`
           );
           dispatch(setUser(userData));
         } else {
-          console.log(2);
           const sessionId = await createSessionId();
 
           const { data: userData } = await moviesApi.get(
@@ -60,7 +56,7 @@ const Navbar = () => {
     };
 
     logInUser();
-  }, [token]);
+  }, [dispatch, sessionIdFromLocalStorage, token]);
 
   return (
     <>
